@@ -47,6 +47,9 @@ const options = {
 // Generate Swagger specification
 const swaggerSpec = swaggerJSDoc(options);
 
+// Serve Swagger documentation
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
 // Connect to MongoDB database using Mongoose
 mongoose
   .connect(process.env.MONGO_URI) // MongoDB URI from environment variables
