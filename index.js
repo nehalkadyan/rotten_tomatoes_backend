@@ -1,8 +1,17 @@
-// Import swagger dependencies and other necessary modules
-import swaggerJSDoc from "swagger-jsdoc";
+// Importing required modules
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+// Importing route handlers
+import movieRouter from "./routes/movie.route.js";
+import showRouter from "./routes/show.route.js";
+import authRouter from "./routes/auth.route.js";
+import watchListRouter from "./routes/watchlist.route.js";
+
+// Importing Swagger dependencies
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
 
 // Load environment variables from .env file
 dotenv.config();
