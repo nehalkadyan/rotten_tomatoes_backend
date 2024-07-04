@@ -72,12 +72,6 @@ app.use("/test", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
-// Import and use your API route handlers here
-import movieRouter from "./routes/movie.route.js";
-import showRouter from "./routes/show.route.js";
-import authRouter from "./routes/auth.route.js";
-import watchListRouter from "./routes/watchlist.route.js";
-
 // API routes using imported routers
 app.use("/api", movieRouter); // Mount movieRouter under /api path
 app.use("/api", showRouter); // Mount showRouter under /api path
