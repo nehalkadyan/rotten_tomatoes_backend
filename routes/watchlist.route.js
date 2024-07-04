@@ -10,8 +10,6 @@ import {
   getShowWatchList,
 } from "../controllers/watchlist.controller.js";
 
-// Swagger documentation for watchlist endpoints
-
 /**
  * @swagger
  * tags:
@@ -26,7 +24,7 @@ import {
  *     summary: Add a movie to user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     parameters:
  *       - in: path
  *         name: movieId
@@ -52,6 +50,8 @@ import {
  *         description: Movie already in watchlist or invalid request
  *       404:
  *         description: Movie or user not found
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -65,7 +65,7 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *     summary: Remove a movie from user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     parameters:
  *       - in: path
  *         name: movieId
@@ -91,6 +91,8 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *         description: Movie not in watchlist or invalid request
  *       404:
  *         description: Movie or user not found
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -108,7 +110,7 @@ router.delete(
  *     summary: Get user's movie watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       200:
  *         description: Fetched user's movie watchlist successfully
@@ -123,6 +125,8 @@ router.delete(
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Movie'
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       404:
  *         description: User not found
  *       500:
@@ -131,7 +135,7 @@ router.delete(
 
 router.get("/watchlist/movies", verifyToken, getMovieWatchList);
 
-//  shows
+// Shows
 
 /**
  * @swagger
@@ -140,7 +144,7 @@ router.get("/watchlist/movies", verifyToken, getMovieWatchList);
  *     summary: Add a show to user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     parameters:
  *       - in: path
  *         name: showId
@@ -166,6 +170,8 @@ router.get("/watchlist/movies", verifyToken, getMovieWatchList);
  *         description: Show already in watchlist or invalid request
  *       404:
  *         description: Show or user not found
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -178,7 +184,7 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *     summary: Remove a show from user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     parameters:
  *       - in: path
  *         name: showId
@@ -204,6 +210,8 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *         description: Show not in watchlist or invalid request
  *       404:
  *         description: Show or user not found
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -216,7 +224,7 @@ router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
  *     summary: Get user's show watchlist
  *     tags: [Watchlist]
  *     security:
- *       - bearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       200:
  *         description: Fetched user's show watchlist successfully
@@ -227,10 +235,12 @@ router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
  *               properties:
  *                 message:
  *                   type: string
- *                 watchList:
+ *                 watchlist:
  *                   type: array
  *                   items:
  *                     type: string
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       404:
  *         description: User not found
  *       500:
@@ -240,3 +250,4 @@ router.get("/watchlist/shows", verifyToken, getShowWatchList);
 
 // Export the router to be used in other parts of the application
 export default router;
+
