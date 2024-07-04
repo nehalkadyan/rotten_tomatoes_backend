@@ -1,17 +1,8 @@
-// Importing required modules
+// Import swagger dependencies and other necessary modules
+import swaggerJSDoc from "swagger-jsdoc";
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
-// Importing route handlers
-import movieRouter from "./routes/movie.route.js";
-import showRouter from "./routes/show.route.js";
-import authRouter from "./routes/auth.route.js";
-import watchListRouter from "./routes/watchlist.route.js";
-
-// Importing Swagger dependencies
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUI from "swagger-ui-express";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -25,16 +16,25 @@ app.use(express.json());
 // Swagger configuration options
 const options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: "3.0.0", // Specify the OpenAPI version
     info: {
-      title: "Documentation : Rotten Tomatoes Backend", // Title of the API documentation
-      version: "1.0", // Version of the API
+      title: "Documentation: Rotten Tomatoes Backend", // Title of your API documentation
+      version: "1.0", // Version of your API
     },
     servers: [
       {
-        url: "https://rotten-tomatoes-backend-2.onrender.com/", // Base URL of the API server
+        url: "https://fullstack-movie-app.onrender.com/", // Base URL of your API server
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   apis: [
     "./routes/auth.route.js", // Path to authentication routes
@@ -47,7 +47,7 @@ const options = {
 // Generate Swagger specification
 const swaggerSpec = swaggerJSDoc(options);
 
-// Serve Swagger documentation
+// Middleware to serve Swagger UI
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 // Connect to MongoDB database using Mongoose
@@ -62,6 +62,12 @@ mongoose
 app.use("/test", (req, res) => {
   res.json({ message: "Hello world" });
 });
+
+// Import and use your API route handlers here
+import movieRouter from "./routes/movie.route.js";
+import showRouter from "./routes/show.route.js";
+import authRouter from "./routes/auth.route.js";
+import watchListRouter from "./routes/watchlist.route.js";
 
 // API routes using imported routers
 app.use("/api", movieRouter); // Mount movieRouter under /api path
