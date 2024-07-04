@@ -32,7 +32,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://fullstack-movie-app.onrender.com/", // Base URL of the API server
+        url: "https://rotten-tomatoes-backend-2.onrender.com/", // Base URL of the API server
       },
     ],
   },
