@@ -4,7 +4,12 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables from .env file
 
-// Middleware function to verify JWT token
+/**
+ * Middleware function to verify JWT token
+ * @param {express.Request} req - Express request object
+ * @param {express.Response} res - Express response object
+ * @param {express.NextFunction} next - Next function to call the next middleware
+ */
 const verifyToken = (req, res, next) => {
   // Extract token from Authorization header
   const token = req.header("Authorization");
