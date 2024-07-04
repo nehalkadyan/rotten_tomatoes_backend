@@ -1,3 +1,4 @@
+// importing necessary modules
 import express from "express";
 const router = express.Router();
 import verifyToken from "../utils/verifyUser.js";
@@ -50,12 +51,9 @@ import {
  *         description: Movie already in watchlist or invalid request
  *       404:
  *         description: Movie or user not found
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
-
 router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
 
 /**
@@ -91,17 +89,10 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *         description: Movie not in watchlist or invalid request
  *       404:
  *         description: Movie or user not found
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
-
-router.delete(
-  "/watchlist/movie/:movieId",
-  verifyToken,
-  removeMovieFromWatchList
-);
+router.delete("/watchlist/movie/:movieId", verifyToken, removeMovieFromWatchList);
 
 /**
  * @swagger
@@ -121,21 +112,16 @@ router.delete(
  *               properties:
  *                 message:
  *                   type: string
- *                 watchList:
+ *                 watchlist:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Movie'
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       404:
  *         description: User not found
  *       500:
  *         description: Internal server error
  */
-
 router.get("/watchlist/movies", verifyToken, getMovieWatchList);
-
-// Shows
 
 /**
  * @swagger
@@ -170,8 +156,6 @@ router.get("/watchlist/movies", verifyToken, getMovieWatchList);
  *         description: Show already in watchlist or invalid request
  *       404:
  *         description: Show or user not found
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -210,8 +194,6 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *         description: Show not in watchlist or invalid request
  *       404:
  *         description: Show or user not found
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -239,8 +221,6 @@ router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
  *                   type: array
  *                   items:
  *                     type: string
- *       401:
- *         description: Unauthorized - Token not provided or invalid
  *       404:
  *         description: User not found
  *       500:
@@ -248,6 +228,4 @@ router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
  */
 router.get("/watchlist/shows", verifyToken, getShowWatchList);
 
-// Export the router to be used in other parts of the application
 export default router;
-
