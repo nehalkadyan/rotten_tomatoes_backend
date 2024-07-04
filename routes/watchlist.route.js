@@ -1,6 +1,5 @@
 // importing necessary modules
 import express from "express";
-const router = express.Router();
 import verifyToken from "../utils/verifyUser.js";
 import {
   addMovieToWatchlist,
@@ -10,6 +9,8 @@ import {
   removeShowFromWatchList,
   getShowWatchList,
 } from "../controllers/watchlist.controller.js";
+
+const router = express.Router();
 
 /**
  * @swagger
@@ -33,6 +34,12 @@ import {
  *         schema:
  *           type: string
  *         description: ID of the movie to add to watchlist
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Movie added to watchlist successfully
@@ -51,6 +58,8 @@ import {
  *         description: Movie already in watchlist or invalid request
  *       404:
  *         description: Movie or user not found
+ *       401:
+ *         description: Unauthorized - Token not provided or invalid
  *       500:
  *         description: Internal server error
  */
@@ -71,6 +80,12 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *         schema:
  *           type: string
  *         description: ID of the movie to remove from watchlist
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Movie removed from watchlist successfully
@@ -112,7 +127,7 @@ router.delete("/watchlist/movie/:movieId", verifyToken, removeMovieFromWatchList
  *               properties:
  *                 message:
  *                   type: string
- *                 watchlist:
+ *                 watchList:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Movie'
@@ -138,6 +153,12 @@ router.get("/watchlist/movies", verifyToken, getMovieWatchList);
  *         schema:
  *           type: string
  *         description: ID of the show to add to watchlist
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Show added to watchlist successfully
@@ -176,6 +197,12 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *         schema:
  *           type: string
  *         description: ID of the show to remove from watchlist
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Show removed from watchlist successfully
@@ -217,7 +244,7 @@ router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
  *               properties:
  *                 message:
  *                   type: string
- *                 watchlist:
+ *                 watchList:
  *                   type: array
  *                   items:
  *                     type: string
