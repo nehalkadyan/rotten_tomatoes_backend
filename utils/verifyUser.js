@@ -1,4 +1,4 @@
-// import necessary modules
+// Importing necessary modules
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -30,5 +30,5 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// Export the utility to be used as a middleware in API routes
+// Exporting the utility to be used as a middleware in API routes
 export default verifyToken;
