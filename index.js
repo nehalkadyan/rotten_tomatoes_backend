@@ -90,8 +90,8 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Test route to verify server is running
-app.use("/test", (req, res) => {
-  res.json({ message: "Hello world" });
+app.get("/", (req, res) => {
+  res.send("Hello world");
 });
 
 // API routes using imported routers
