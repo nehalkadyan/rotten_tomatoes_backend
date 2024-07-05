@@ -38,12 +38,17 @@ const options = {
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
         },
       },
     },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: [
     "./routes/auth.route.js", // Path to authentication routes
