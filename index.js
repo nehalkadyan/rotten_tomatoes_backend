@@ -91,7 +91,7 @@ mongoose
 
 // Test route to verify server is running
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.send("Rotten Tomatoes Backend Project, Sprint 3");
 });
 
 // API routes using imported routers
