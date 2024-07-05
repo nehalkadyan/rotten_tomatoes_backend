@@ -1,4 +1,3 @@
-// Importing required modules
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -41,6 +40,24 @@ const options = {
           type: "apiKey",
           in: "header",
           name: "Authorization",
+        },
+      },
+      schemas: {
+        Movie: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            title: { type: "string" },
+            description: { type: "string" },
+          },
+        },
+        Show: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            title: { type: "string" },
+            description: { type: "string" },
+          },
         },
       },
     },
