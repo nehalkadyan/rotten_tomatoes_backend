@@ -1,6 +1,8 @@
 
 Rotten Tomatoes Backend API
 
+For the UI based documentation, visit :- https://rotten-tomatoes-backend-2.onrender.com/api-docs
+
 This Node.js project serves as the backend API for managing movies, shows, and user authentication for a Rotten Tomatoes-like application.
 
 Technologies Used
