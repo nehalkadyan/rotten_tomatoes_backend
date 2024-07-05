@@ -1,5 +1,5 @@
-// importing necessary modules
 import express from "express";
+const router = express.Router();
 import verifyToken from "../utils/verifyUser.js";
 import {
   addMovieToWatchlist,
@@ -10,7 +10,7 @@ import {
   getShowWatchList,
 } from "../controllers/watchlist.controller.js";
 
-const router = express.Router();
+// Swagger documentation for watchlist endpoints
 
 /**
  * @swagger
@@ -21,25 +21,55 @@ const router = express.Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Movie:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: ID of the movie
+ *         title:
+ *           type: string
+ *           description: Title of the movie
+ *         description:
+ *           type: string
+ *           description: Description of the movie
+ *     Show:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: ID of the show
+ *         title:
+ *           type: string
+ *           description: Title of the show
+ *         description:
+ *           type: string
+ *           description: Description of the show
+ */
+
+/**
+ * @swagger
  * /api/watchlist/movie/{movieId}:
  *   post:
  *     summary: Add a movie to user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - Authorization: []
+ *       - bearerAuth: []
  *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
  *       - in: path
  *         name: movieId
  *         required: true
  *         schema:
  *           type: string
  *         description: ID of the movie to add to watchlist
- *       - in: header
- *         name: Authorization
- *         required: true
- *         schema:
- *           type: string
- *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Movie added to watchlist successfully
@@ -72,20 +102,20 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *     summary: Remove a movie from user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - Authorization: []
+ *       - bearerAuth: []
  *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
  *       - in: path
  *         name: movieId
  *         required: true
  *         schema:
  *           type: string
  *         description: ID of the movie to remove from watchlist
- *       - in: header
- *         name: Authorization
- *         required: true
- *         schema:
- *           type: string
- *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Movie removed from watchlist successfully
@@ -116,7 +146,14 @@ router.delete("/watchlist/movie/:movieId", verifyToken, removeMovieFromWatchList
  *     summary: Get user's movie watchlist
  *     tags: [Watchlist]
  *     security:
- *       - Authorization: []
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
  *     responses:
  *       200:
  *         description: Fetched user's movie watchlist successfully
@@ -145,20 +182,20 @@ router.get("/watchlist/movies", verifyToken, getMovieWatchList);
  *     summary: Add a show to user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - Authorization: []
+ *       - bearerAuth: []
  *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
  *       - in: path
  *         name: showId
  *         required: true
  *         schema:
  *           type: string
  *         description: ID of the show to add to watchlist
- *       - in: header
- *         name: Authorization
- *         required: true
- *         schema:
- *           type: string
- *         description: JWT token to authorize the request
  *     responses:
  *       200:
  *         description: Show added to watchlist successfully
@@ -189,70 +226,8 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *     summary: Remove a show from user's watchlist
  *     tags: [Watchlist]
  *     security:
- *       - Authorization: []
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: showId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the show to remove from watchlist
  *       - in: header
  *         name: Authorization
  *         required: true
- *         schema:
- *           type: string
- *         description: JWT token to authorize the request
- *     responses:
- *       200:
- *         description: Show removed from watchlist successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 watchlist:
- *                   type: array
- *                   items:
- *                     type: string
- *       400:
- *         description: Show not in watchlist or invalid request
- *       404:
- *         description: Show or user not found
- *       500:
- *         description: Internal server error
- */
-router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
-
-/**
- * @swagger
- * /api/watchlist/shows:
- *   get:
- *     summary: Get user's show watchlist
- *     tags: [Watchlist]
- *     security:
- *       - Authorization: []
- *     responses:
- *       200:
- *         description: Fetched user's show watchlist successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 watchList:
- *                   type: array
- *                   items:
- *                     type: string
- *       404:
- *         description: User not found
- *       500:
- *         description: Internal server error
- */
-router.get("/watchlist/shows", verifyToken, getShowWatchList);
-
-export default router;
