@@ -10,8 +10,6 @@ import {
   getShowWatchList,
 } from "../controllers/watchlist.controller.js";
 
-// Swagger documentation for watchlist endpoints
-
 /**
  * @swagger
  * tags:
@@ -83,7 +81,7 @@ import {
  *                 watchlist:
  *                   type: array
  *                   items:
- *                     type: object
+ *                     $ref: '#/components/schemas/Movie'
  *       400:
  *         description: Movie already in watchlist or invalid request
  *       404:
@@ -129,7 +127,7 @@ router.post("/watchlist/movie/:movieId", verifyToken, addMovieToWatchlist);
  *                 watchlist:
  *                   type: array
  *                   items:
- *                     type: object
+ *                     $ref: '#/components/schemas/Movie'
  *       400:
  *         description: Movie not in watchlist or invalid request
  *       404:
@@ -231,3 +229,73 @@ router.post("/watchlist/show/:showId", verifyToken, addShowToWatchlist);
  *       - in: header
  *         name: Authorization
  *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
+ *       - in: path
+ *         name: showId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the show to remove from watchlist
+ *     responses:
+ *       200:
+ *         description: Show removed from watchlist successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 watchlist:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       400:
+ *         description: Show not in watchlist or invalid request
+ *       404:
+ *         description: Show or user not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete("/watchlist/show/:showId", verifyToken, removeShowFromWatchList);
+
+/**
+ * @swagger
+ * /api/watchlist/shows:
+ *   get:
+ *     summary: Get user's show watchlist
+ *     tags: [Watchlist]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token
+ *     responses:
+ *       200:
+ *         description: Fetched user's show watchlist successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 watchList:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/watchlist/shows", verifyToken, getShowWatchList);
+
+// Export the router to be used in other parts of the application
+export default router;
